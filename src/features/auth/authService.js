@@ -1,7 +1,8 @@
 import axios from 'axios'
 
-var db= 'http://localhost:8000'
-
+var db= 'https://tame-plum-spider-gown.cyclic.app'
+// var db= 'http://localhost:8000'
+// 
 const API_URL = db+'/api/users/'
 
 // Register user
