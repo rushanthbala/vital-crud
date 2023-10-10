@@ -1,7 +1,7 @@
 import axios from 'axios';
 
-// const usersUrl = 'http://localhost:3003/users';
-const usersUrl = 'http://localhost:8000';
+const usersUrl = 'https://tame-plum-spider-gown.cyclic.app';
+// const usersUrl = 'http://localhost:8000';
 
 export const getUsers = async (id) => {
     id = id || '';
