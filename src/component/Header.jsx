@@ -13,7 +13,9 @@ import MenuIcon from "@mui/icons-material/Menu";
 import Toolbar from "@mui/material/Toolbar";
 import Typography from "@mui/material/Typography";
 import Button from "@mui/material/Button";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
+import { logout, reset } from "../features/auth/authSlice";
+import { useDispatch } from "react-redux";
 
 interface Props {
   /**
@@ -43,7 +45,14 @@ const navItems = [
 export default function DrawerAppBar(props: Props) {
   const { window } = props;
   const [mobileOpen, setMobileOpen] = React.useState(false);
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
 
+  const onLogout = () => {
+    dispatch(logout());
+    dispatch(reset());
+    navigate("/");
+  };
   const handleDrawerToggle = () => {
     setMobileOpen((prevState) => !prevState);
   };
@@ -64,6 +73,13 @@ export default function DrawerAppBar(props: Props) {
             </ListItemButton>
           </ListItem>
         ))}
+        <ListItem disablePadding>
+          <ListItemButton sx={{ textAlign: "center" }}>
+            <div  onClick={onLogout}>
+              <ListItemText primary={"Logout"} />
+            </div>
+          </ListItemButton>
+        </ListItem>
       </List>
     </Box>
   );
@@ -103,6 +119,9 @@ export default function DrawerAppBar(props: Props) {
                 </Link>
               </Button>
             ))}
+            <Button sx={{ color: "#fff" }} onClick={onLogout}>
+              Logout
+            </Button>
           </Box>
         </Toolbar>
       </AppBar>
