@@ -41,9 +41,7 @@ const TodoForm = () => {
   const [SearchingText, setSearchingText] = useState("");
   const [Loading, setLoading] = useState(true);
   const [DisableDeleteBtn, setDisableDeleteBtn] = useState(false);
-  const { user } = useSelector(
-    (state) => state.auth
-  )
+  const { user } = useSelector((state) => state.auth);
   useEffect(() => {
     console.log(user._id);
     getAllUsers(user._id);
@@ -53,19 +51,19 @@ const TodoForm = () => {
     try {
       setDisableDeleteBtn(true);
       await deleteUser(id).then(setDisableDeleteBtn(false));
-      getAllUsers();
+      getAllUsers(user._id);
     } catch (error) {}
   };
 
   const getAllUsers = async (id) => {
-    let response = await getUsers("api/todo/byuser/"+id)
+    let response = await getUsers("api/todo/byuser/" + id)
       .then((res) => {
         setLoading(false);
         setSearchUsers(res.data);
         setUsers(res.data);
       })
       .catch((err) => {
-        setLoading(true);
+        setLoading(false);
       });
     console.log(response);
   };
@@ -84,7 +82,6 @@ const TodoForm = () => {
     }
   };
 
- 
   const VisuallyHiddenInput = styled("input")({
     clip: "rect(0 0 0 0)",
     clipPath: "inset(50%)",
@@ -171,14 +168,22 @@ const TodoForm = () => {
                       <Button
                         color="primary"
                         variant="contained"
-                        style={{ marginRight: 10,width:"100px",margin:"2px" }}
+                        style={{
+                          marginRight: 10,
+                          width: "100px",
+                          margin: "2px",
+                        }}
                         component={Link}
                         to={`/todo/edit/${user._id}`}
                       >
                         EDIT
                       </Button>
                       <Button
-                        style={{ backgroundColor: "#B33A3A" ,width:"100px",margin:"2px"}}
+                        style={{
+                          backgroundColor: "#B33A3A",
+                          width: "100px",
+                          margin: "2px",
+                        }}
                         variant="contained"
                         onClick={() => deleteUserData("api/todo/" + user._id)}
                         disabled={DisableDeleteBtn}
@@ -188,6 +193,11 @@ const TodoForm = () => {
                     </TableCell>
                   </TRow>
                 ))}
+              {users.length === 0 && (
+                  <THead>
+                    <TableCell align="center"  colSpan={12}>No Data</TableCell>
+                  </THead>
+              )}
             </TableBody>
           </StyledTable>
         ) : (
