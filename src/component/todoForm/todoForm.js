@@ -14,6 +14,7 @@ import { getUsers, deleteUser } from "../../Service/api";
 import Spinner from "../Spinner";
 import { Link } from "react-router-dom";
 import AddIcon from "@mui/icons-material/Add";
+import { useSelector } from "react-redux";
 
 const StyledTable = styled(Table)`
   width: 90%;
@@ -40,10 +41,13 @@ const TodoForm = () => {
   const [SearchingText, setSearchingText] = useState("");
   const [Loading, setLoading] = useState(true);
   const [DisableDeleteBtn, setDisableDeleteBtn] = useState(false);
-
+  const { user } = useSelector(
+    (state) => state.auth
+  )
   useEffect(() => {
-    getAllUsers();
-  }, []);
+    console.log(user._id);
+    getAllUsers(user._id);
+  }, [user]);
 
   const deleteUserData = async (id) => {
     try {
@@ -53,8 +57,8 @@ const TodoForm = () => {
     } catch (error) {}
   };
 
-  const getAllUsers = async () => {
-    let response = await getUsers("api/todo")
+  const getAllUsers = async (id) => {
+    let response = await getUsers("api/todo/byuser/"+id)
       .then((res) => {
         setLoading(false);
         setSearchUsers(res.data);

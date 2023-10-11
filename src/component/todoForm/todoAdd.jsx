@@ -3,13 +3,17 @@ import TextField from "@mui/material/TextField";
 import Button from "@mui/material/Button";
 import { addUser } from "../../Service/api";
 import { useNavigate } from "react-router-dom";
+import { useSelector } from "react-redux";
 
 function MyForm() {
   let navigate = useNavigate();
-
+  const { user } = useSelector(
+    (state) => state.auth
+  )
   const [formData, setFormData] = useState({
     name: "",
     description: "",
+    userID:user._id
   });
   const [errors, setErrors] = useState({});
 
