@@ -76,7 +76,6 @@ export default function Login() {
 
   // Validation for onBlur Email
   const handleEmail = () => {
-    console.log(isEmail(emailInput));
     if (!isEmail(emailInput)) {
       setEmailError(true);
       return;

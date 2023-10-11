@@ -13,9 +13,9 @@ import MenuIcon from "@mui/icons-material/Menu";
 import Toolbar from "@mui/material/Toolbar";
 import Typography from "@mui/material/Typography";
 import Button from "@mui/material/Button";
-import { Link, useNavigate } from "react-router-dom";
+import { Link } from "react-router-dom";
 import { logout, reset } from "../features/auth/authSlice";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 
 interface Props {
   /**
@@ -41,17 +41,22 @@ const navItems = [
     href: "/",
   },
 ];
-
+function reloadPage() {
+  window.location.href='/'
+}
 export default function DrawerAppBar(props: Props) {
   const { window } = props;
+  const container =
+    window !== undefined ? () => window().document.body : undefined;
   const [mobileOpen, setMobileOpen] = React.useState(false);
   const dispatch = useDispatch();
-  const navigate = useNavigate();
+  const { user } = useSelector((state) => state.auth);
 
   const onLogout = () => {
     dispatch(logout());
     dispatch(reset());
-    navigate("/");
+    reloadPage();
+    // location.href="/"
   };
   const handleDrawerToggle = () => {
     setMobileOpen((prevState) => !prevState);
@@ -75,7 +80,7 @@ export default function DrawerAppBar(props: Props) {
         ))}
         <ListItem disablePadding>
           <ListItemButton sx={{ textAlign: "center" }}>
-            <div  onClick={onLogout}>
+            <div onClick={onLogout}>
               <ListItemText primary={"Logout"} />
             </div>
           </ListItemButton>
@@ -83,9 +88,6 @@ export default function DrawerAppBar(props: Props) {
       </List>
     </Box>
   );
-
-  const container =
-    window !== undefined ? () => window().document.body : undefined;
 
   return (
     <Box sx={{ display: "flex" }}>
@@ -120,7 +122,10 @@ export default function DrawerAppBar(props: Props) {
               </Button>
             ))}
             <Button sx={{ color: "#fff" }} onClick={onLogout}>
-              Logout
+              
+              {
+                user ? "Logout ":"Login"
+              }
             </Button>
           </Box>
         </Toolbar>

@@ -43,7 +43,6 @@ const TodoForm = () => {
   const [DisableDeleteBtn, setDisableDeleteBtn] = useState(false);
   const { user } = useSelector((state) => state.auth);
   useEffect(() => {
-    console.log(user._id);
     getAllUsers(user._id);
   }, [user]);
 
@@ -69,7 +68,6 @@ const TodoForm = () => {
   };
   const onsearch = (e) => {
     setSearchingText(e.target.value);
-    console.log(e.target.value, users[0]);
     let filterData = users.filter(
       (item) =>
         String(item.name.toUpperCase()).startsWith(
