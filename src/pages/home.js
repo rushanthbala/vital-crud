@@ -12,7 +12,7 @@ function Dashboard() {
     if (!user) {
       navigate("/login");
     }
-  }, []);
+  }, [navigate,user]);
 
   return (
     <>

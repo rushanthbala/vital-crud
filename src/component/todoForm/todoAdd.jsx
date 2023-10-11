@@ -1,15 +1,15 @@
-import React, { useState } from 'react';
-import TextField from '@mui/material/TextField';
-import Button from '@mui/material/Button';
-import { addUser } from '../../Service/api';
-import { useNavigate } from 'react-router-dom';
+import React, { useState } from "react";
+import TextField from "@mui/material/TextField";
+import Button from "@mui/material/Button";
+import { addUser } from "../../Service/api";
+import { useNavigate } from "react-router-dom";
 
 function MyForm() {
-    let navigate = useNavigate();
+  let navigate = useNavigate();
 
   const [formData, setFormData] = useState({
-    name: '',
-    description: '',
+    name: "",
+    description: "",
   });
   const [errors, setErrors] = useState({});
 
@@ -24,7 +24,7 @@ function MyForm() {
     if (errors[name]) {
       setErrors({
         ...errors,
-        [name]: '',
+        [name]: "",
       });
     }
   };
@@ -35,10 +35,10 @@ function MyForm() {
     // Validation logic
     const newErrors = {};
     if (!formData.name) {
-      newErrors.name = 'Name is required';
+      newErrors.name = "Name is required";
     }
     if (!formData.description) {
-      newErrors.description = 'Description is required';
+      newErrors.description = "Description is required";
     }
 
     if (Object.keys(newErrors).length === 0) {
@@ -50,27 +50,34 @@ function MyForm() {
     }
   };
 
-  
-
-  const sendDataToBackend =async () => {
+  const sendDataToBackend = async () => {
     // Send 'name' and 'description' to the backend
     // Replace '/api/endpoint' with your actual backend API endpoint
 
     try {
-        const response = await addUser('api/todo' , formData);
-        navigate('/todo');
-        console.log(response);
-    } catch (error) {
-        
-    }
-
-    
+      const response = await addUser("api/todo", formData);
+      navigate("/todo");
+      console.log(response);
+    } catch (error) {}
   };
 
   return (
-    <div className="centered-form"> {/* Apply CSS class for centering */}
-      <div className="form-container"> {/* Apply CSS class for form container */}
+    <div
+      style={{
+        display: "flex",
+        justifyContent: "center",
+        alignItems: "center",
+      }}
+    >
+      {" "}
+      {/* Apply CSS class for centering */}
+      <div className="form-container">
+        {" "}
+        {/* Apply CSS class for form container */}
         <form onSubmit={handleSubmit}>
+          <h3>
+            Todo
+          </h3>
           <div>
             <TextField
               label="Name"
@@ -83,6 +90,7 @@ function MyForm() {
               helperText={errors.name}
             />
           </div>
+          <br />
           <div>
             <TextField
               label="Description"
@@ -95,6 +103,8 @@ function MyForm() {
               helperText={errors.description}
             />
           </div>
+          <br />
+
           <div>
             <Button type="submit" variant="contained" color="primary">
               Submit

@@ -8,10 +8,12 @@ import {
   Button,
   styled,
   Grid,
+  Box,
 } from "@mui/material";
 import { getUsers, deleteUser } from "../../Service/api";
 import Spinner from "../Spinner";
 import { Link } from "react-router-dom";
+import AddIcon from "@mui/icons-material/Add";
 
 const StyledTable = styled(Table)`
   width: 90%;
@@ -77,33 +79,71 @@ const TodoForm = () => {
       setSearchUsers(filterData);
     }
   };
+
+ 
+  const VisuallyHiddenInput = styled("input")({
+    clip: "rect(0 0 0 0)",
+    clipPath: "inset(50%)",
+    height: 1,
+    overflow: "hidden",
+    position: "absolute",
+    bottom: 0,
+    left: 0,
+    whiteSpace: "nowrap",
+    width: 1,
+  });
   return (
     <div>
       <br />
       <br />
-      <Grid container>
-        <Grid item xs={6}></Grid>
-        <Grid item xs={5}>
-          <input
-            type="text"
-            class="form-control"
-            placeHolder="Type here..."
-            onChange={onsearch}
-            value={SearchingText}
-            style={{
-              width: "100%",
-              backgroundColor: "#fff",
-              color: "#000 !important",
-              padding: "14px 20px",
-              margin: "8px 0",
-              borderRadius: "4px",
-              cursor: "pointer",
-              border: "1px soild red",
-            }}
-          />
+      <Box sx={{ flexGrow: 1 }}>
+        <Grid
+          container
+          spacing={{ xs: 2, md: 3 }}
+          columns={{ xs: 2, sm: 8, md: 12 }}
+          justifyContent="space-between"
+        >
+          <Grid item xs={2} sm={4} md={4} alignItems="flex-end" Í>
+            <input
+              type="text"
+              class="form-control"
+              placeHolder="Type here..."
+              onChange={onsearch}
+              value={SearchingText}
+              style={{
+                width: "100%",
+                backgroundColor: "#fff",
+                color: "#1976d2 !important",
+                padding: "14px 10px",
+                borderRadius: "4px",
+                cursor: "pointer",
+                border: "1px solid #1976d2",
+                height: "36px",
+              }}
+            />
+            {/* <Item>dlfjklsfksfashfjkwh=2</Item> */}
+          </Grid>
+          <Grid item xs={2} sm={4} md={4}>
+            <Link
+              to="/todo/add"
+              style={{ textDecoration: "none", color: "white" }}
+            >
+              <Button
+                component="label"
+                variant="contained"
+                startIcon={<AddIcon />}
+                sx={{
+                  width: "100%",
+                }}
+              >
+                Adds
+                <VisuallyHiddenInput type="file" />
+              </Button>
+            </Link>
+          </Grid>
         </Grid>
-        <Grid item xs={1}></Grid>
-      </Grid>
+      </Box>
+
       <div style={{ overflowX: "auto" }}>
         {!Loading ? (
           <StyledTable>
@@ -127,15 +167,14 @@ const TodoForm = () => {
                       <Button
                         color="primary"
                         variant="contained"
-                        style={{ marginRight: 10 }}
+                        style={{ marginRight: 10,width:"100px",margin:"2px" }}
                         component={Link}
                         to={`/todo/edit/${user._id}`}
                       >
                         EDIT
                       </Button>
                       <Button
-                        sx={{ backgroundColor: "#B33A3A" }}
-                        color="secondary"
+                        style={{ backgroundColor: "#B33A3A" ,width:"100px",margin:"2px"}}
                         variant="contained"
                         onClick={() => deleteUserData("api/todo/" + user._id)}
                         disabled={DisableDeleteBtn}

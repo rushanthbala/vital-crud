@@ -12,9 +12,8 @@ function App() {
   return (
     <>
       <Router>
+        <Header />
         <div className="container">
-          <Header />
-
           <Routes>
             <Route path="/todo" element={<Dashboard />} />
             <Route path="/" element={<Dashboard />} />
